@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocolo Capilar 365 | Dr. Tricólogo - Milton</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        :root {
+            --bg-main: #FFFFFF;
+            --bg-sec: #F8F9FA;
+            --bg-card: #FFFFFF;
+            --text-dark: #111111;
+            --text-muted: #555555;
+            --primary-red: #C8102E;
+            --primary-red-dark: #9B0B22;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #FDF8E7;
+            --dark-black: #121212;
+            --border-color: #E2E8F0;
+            --success: #16A34A;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.09);
+            --shadow-gold: 0 4px 15px rgba(212, 175, 55, 0.25);
+            --radius: 14px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-sec);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .brand-font {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* ================= PANTALLA DE LOGIN ================= */
+        #login-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #111111 0%, #220509 50%, #111111 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #login-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .login-card {
+            background: var(--bg-main);
+            width: 100%;
+            max-width: 430px;
+            border-radius: 20px;
+            padding: 40px 35px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            border-top: 6px solid var(--primary-red);
+            border-bottom: 4px solid var(--accent-gold);
+            text-align: center;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-logo {
+            width: 75px;
+            height: 75px;
+            background: var(--dark-black);
+            color: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .login-card h1 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dark-black);
+            margin-bottom: 6px;
+        }
+
+        .login-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--dark-black);
+            margin-bottom: 6px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-red);
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 12px 14px 12px 40px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.12);
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
+            color: #FFF;
+            border: none;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(200, 16, 46, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(200, 16, 46, 0.45);
+        }
+
+        #login-error {
+            color: var(--primary-red);
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* ================= LAYOUT PRINCIPAL ================= */
+        #app-container {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .top-header {
+            background: var(--dark-black);
+            color: #FFF;
+            padding: 16px 30px;
+            border-bottom: 3px solid var(--accent-gold);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .brand-area {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-badge {
+            background: var(--primary-red);
+            color: #FFF;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            border: 2px solid var(--accent-gold);
+        }
+
+        .brand-title h2 {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: #FFF;
+        }
+
+        .brand-title span {
+            font-size: 12px;
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        .sync-status {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .db-pill {
+            background: rgba(255,255,255,0.1);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        .dot-live {
+            width: 9px;
+            height: 9px;
+            background: #22C55E;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #22C55E;
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.6; }
+        }
+
+        .btn-logout {
+            background: transparent;
+            color: #FFF;
+            border: 1px solid var(--primary-red);
+            padding: 7px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-logout:hover {
+            background: var(--primary-red);
+        }
+
+        /* ================= DASHBOARD METRICS BAR ================= */
+        .hero-banner {
+            background: var(--bg-main);
+            border-bottom: 1px solid var(--border-color);
+            padding: 25px 30px;
+        }
+
+        .hero-grid {
+            max-width: 1350px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--primary-red);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+
+        .stat-card.gold-border {
+            border-left-color: var(--accent-gold);
+        }
+
+        .stat-card.black-border {
+            border-left-color: var(--dark-black);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .stat-header i {
+            font-size: 18px;
+            color: var(--primary-red);
+        }
+
+        .stat-value {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--dark-black);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .stat-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            background: #E2E8F0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-red), var(--accent-gold));
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        /* ================= NAVEGACIÓN DE PESTAÑAS ================= */
+        .nav-tabs-wrapper {
+            background: var(--bg-main);
+            border-bottom: 2px solid var(--border-color);
+            position: sticky;
+            top: 79px;
+            z-index: 90;
+        }
+
+        .nav-tabs {
+            max-width: 1350px;
+            margin: 0 auto;
+            display: flex;
+            overflow-x: auto;
+            padding: 0 20px;
+            gap: 8px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 16px 20px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .tab-btn i {
+            font-size: 15px;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary-red);
+        }
+
+        .tab-btn.active {
+            color: var(--primary-red);
+            border-bottom-color: var(--primary-red);
+            background: rgba(200, 16, 46, 0.04);
+        }
+
+        /* ================= SECCIONES DE CONTENIDO ================= */
+        .main-content {
+            max-width: 1350px;
+            margin: 30px auto;
+            padding: 0 20px 60px;
+        }
+
+        .tab-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ================= SECCIÓN 1: TRACKER DIARIO 365 DÍAS ================= */
+        .tracker-layout {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 980px) {
+            .tracker-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            padding: 24px;
+        }
+
+        .panel-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--dark-black);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .panel-title i {
+            color: var(--primary-red);
+            margin-right: 8px;
+        }
+
+        .month-selector {
+            width: 100%;
+            padding: 11px 14px;
+            border-radius: 10px;
+            border: 2px solid var(--dark-black);
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            margin-bottom: 16px;
+            background: var(--bg-main);
+            cursor: pointer;
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            max-height: 440px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .day-cell {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 8px 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--bg-sec);
+            position: relative;
+        }
+
+        .day-cell:hover {
+            border-color: var(--primary-red);
+            transform: scale(1.04);
+        }
+
+        .day-cell.selected {
+            background: var(--dark-black);
+            color: #FFF;
+            border-color: var(--accent-gold);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .day-cell.completed-100 {
+            background: #DCFCE7;
+            border-color: #16A34A;
+            color: #14532D;
+        }
+
+        .day-cell.completed-partial {
+            background: var(--accent-gold-light);
+            border-color: var(--accent-gold);
+        }
+
+        .day-cell.selected.completed-100,
+        .day-cell.selected.completed-partial {
+            background: var(--primary-red);
+            color: #FFF;
+        }
+
+        .day-cell .d-num {
+            font-size: 13px;
+            font-weight: 800;
+            display: block;
+        }
+
+        .day-cell .d-date {
+            font-size: 10px;
+            opacity: 0.8;
+            display: block;
+        }
+
+        .day-cell .d-pct {
+            font-size: 9px;
+            font-weight: 700;
+            margin-top: 2px;
+            display: inline-block;
+            padding: 1px 4px;
+            border-radius: 4px;
+            background: rgba(0,0,0,0.08);
+        }
+
+        /* Detalle del Día Seleccionado */
+        .day-detail-header {
+            background: linear-gradient(135deg, var(--dark-black) 0%, #2B0910 100%);
+            color: #FFF;
+            padding: 22px 25px;
+            border-radius: 12px;
+            margin-bottom: 22px;
+            border-left: 6px solid var(--accent-gold);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .day-badge-phase {
+            background: var(--primary-red);
+            color: #FFF;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+
+        .day-detail-header h3 {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .day-detail-header p {
+            font-size: 13px;
+            color: #E2E8F0;
+            margin-top: 4px;
+        }
+
+        .day-score-circle {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 12px 18px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .day-score-circle span {
+            display: block;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent-gold);
+        }
+
+        .day-score-circle small {
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        /* Lista de Tareas con Horarios Exactos */
+        .schedule-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 18px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-main);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .task-item:hover {
+            border-color: var(--primary-red);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .task-item.done {
+            background: #F0FDF4;
+            border-color: #86EFAC;
+        }
+
+        .task-checkbox {
+            width: 24px;
+            height: 24px;
+            accent-color: var(--primary-red);
+            margin-top: 3px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .task-time-col {
+            min-width: 110px;
+            flex-shrink: 0;
+        }
+
+        .time-badge {
+            background: var(--dark-black);
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-size: 12px;
+            padding: 5px 10px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .task-cat-tag {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 5px;
+            color: var(--primary-red);
+        }
+
+        .task-info {
+            flex: 1;
+        }
+
+        .task-info h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--dark-black);
+            margin-bottom: 4px;
+        }
+
+        .task-item.done .task-info h4 {
+            text-decoration: line-through;
+            color: #15803D;
+        }
+
+        .task-info p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .notes-area {
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .notes-area textarea {
+            width: 100%;
+            height: 80px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 13px;
+            margin-top: 8px;
+            resize: vertical;
+        }
+
+        .btn-save-note {
+            margin-top: 10px;
+            background: var(--dark-black);
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-save-note:hover {
+            background: var(--primary-red);
+            color: #FFF;
+            border-color: var(--primary-red);
+        }
+
+        /* ================= TABLAS Y TARJETAS DE PROTOCOLO ================= */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 24px;
+            margin-bottom: 25px;
+        }
+
+        .clinical-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 13.5px;
+        }
+
+        .clinical-table th {
+            background: var(--dark-black);
+            color: var(--accent-gold);
+            text-align: left;
+            padding: 12px 14px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .clinical-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        .clinical-table tr:hover td {
+            background: rgba(200, 16, 46, 0.03);
+        }
+
+        .pill-badge {
+            display: inline-block;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            background: var(--accent-gold-light);
+            color: #856404;
+            border: 1px solid var(--accent-gold);
+        }
+
+        /* Lista de Compras Interactiva */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 18px;
+        }
+
+        .shop-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--bg-main);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .shop-item.bought {
+            background: #F0FDF4;
+            border-color: #86EFAC;
+        }
+
+        .shop-item input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-red);
+        }
+
+        /* Fases Anuales */
+        .phase-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .phase-box {
+            background: var(--bg-main);
+            border-radius: var(--radius);
+            padding: 22px;
+            border-top: 5px solid var(--primary-red);
+            box-shadow: var(--shadow-sm);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            border-left: 1px solid var(--border-color);
+        }
+
+        .phase-box h4 {
+            color: var(--primary-red);
+            font-size: 13px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .phase-box h3 {
+            font-size: 17px;
+            margin-bottom: 10px;
+            color: var(--dark-black);
+        }
+
+        .toast-notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--dark-black);
+            color: #FFF;
+            border-left: 5px solid var(--accent-gold);
+            padding: 14px 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-md);
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 9999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .toast-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= PANTALLA DE LOGIN ================= -->
+    <div id="login-screen">
+        <div class="login-card">
+            <div class="login-logo">
+                <i class="fa-solid fa-user-doctor"></i>
+            </div>
+            <h1>CROWN HAIR PROTOCOL 365</h1>
+            <p>Plataforma Clínica de Recuperación de Densidad, Calibre y Rizo — Paciente: <strong>Milton (22-23 años | 1.75m)</strong></p>
+
+            <form id="login-form">
+                <div class="input-group">
+                    <label>Usuario Clínico</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="username-input" placeholder="Ingresa tu usuario (Milton)" value="Milton" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Contraseña de Acceso</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password-input" placeholder="Ingresa tu contraseña" value="Milton_3002" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fa-solid fa-shield-heart"></i> Entrar al Sistema Conectado a Supabase
+                </button>
+                <div id="login-error">Usuario o contraseña incorrectos. Verifica tus credenciales.</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= APLICACIÓN PRINCIPAL ================= -->
+    <div id="app-container">
+        <!-- HEADER SUPERIOR -->
+        <header class="top-header">
+            <div class="brand-area">
+                <div class="brand-badge">
+                    <i class="fa-solid fa-dna"></i>
+                </div>
+                <div class="brand-title">
+                    <h2>PROTOCOLO CAPILAR MILTON 365</h2>
+                    <span>Inicio: Lunes 16 Nov 2026 — Fin: 15 Nov 2027 | Cabello Semi-Rizado</span>
+                </div>
+            </div>
+            <div class="sync-status">
+                <div class="db-pill">
+                    <span class="dot-live" id="supabase-indicator"></span>
+                    <span id="supabase-status-text">Conectado a Supabase</span>
+                </div>
+                <button class="btn-logout" onclick="logoutApp()">
+                    <i class="fa-solid fa-right-from-bracket"></i> Salir
+                </button>
+            </div>
+        </header>
+
+        <!-- BARRA DE PROGRESO Y ESTADÍSTICAS GLOBALES -->
+        <section class="hero-banner">
+            <div class="hero-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span>Progreso Anual (365 Días)</span>
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-value" id="annual-pct-val">0.0%</div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="annual-progress-bar"></div>
+                    </div>
+                    <div class="stat-sub" id="annual-tasks-sub">0 de 2,920 acciones completadas</div>
+                </div>
+
+                <div class="stat-card gold-border">
+                    <div class="stat-header">
+                        <span>Cumplimiento del Día Seleccionado</span>
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+                    <div class="stat-value" id="today-pct-val">0%</div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="today-progress-bar"></div>
+                    </div>
+                    <div class="stat-sub" id="today-date-sub">Lunes, 16 de Noviembre 2026</div>
+                </div>
+
+                <div class="stat-card black-border">
+                    <div class="stat-header">
+                        <span>Días Completados al 100%</span>
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div class="stat-value" id="perfect-days-val">0 / 365</div>
+                    <div class="stat-sub">Meta mínima de éxito folicular: >85%</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span>Perfil Biológico del Paciente</span>
+                        <i class="fa-solid fa-id-card-clip"></i>
+                    </div>
+                    <div class="stat-value" style="font-size:19px;">Milton • 1.75 m</div>
+                    <div class="stat-sub">Cumple 23 años: <strong>25 Nov</strong> • Fibra Semi-Rizada 2C/3A</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PESTAÑAS DE NAVEGACIÓN -->
+        <div class="nav-tabs-wrapper">
+            <nav class="nav-tabs">
+                <button class="tab-btn active" onclick="switchTab('tab-tracker', this)">
+                    <i class="fa-solid fa-list-check"></i> 1. Calendario & Rutina Día a Día (365 Días)
+                </button>
+                <button class="tab-btn" onclick="switchTab('tab-diagnosis', this)">
+                    <i class="fa-solid fa-microscope"></i> 2. Diagnóstico de tus Fotos & Ciencia
+                </button>
+                <button class="tab-btn" onclick="switchTab('tab-arsenal', this)">
+                    <i class="fa-solid fa-pills"></i> 3. Pastillas, Shampoos & Tópicos Naturales
+                </button>
+                <button class="tab-btn" onclick="switchTab('tab-nutrition', this)">
+                    <i class="fa-solid fa-apple-whole"></i> 4. Dieta Vasodilatadora & Horarios
+                </button>
+                <button class="tab-btn" onclick="switchTab('tab-shopping', this)">
+                    <i class="fa-solid fa-cart-shopping"></i> 5. Lista de Compras & Bitácora Mensual
+                </button>
+            </nav>
+        </div>
+
+        <!-- CONTENEDOR PRINCIPAL -->
+        <main class="main-content">
+
+            <!-- ================= PESTAÑA 1: CALENDARIO Y CHECKLIST DIARIO ================= -->
+            <section id="tab-tracker" class="tab-section active">
+                <div class="tracker-layout">
+                    <!-- Columna Izquierda: Selector de Mes y 365 Días -->
+                    <div class="panel-card">
+                        <div class="panel-title">
+                            <span><i class="fa-solid fa-calendar-days"></i> Mapa de 12 Meses</span>
+                            <button onclick="goToStartDay()" style="font-size:11px; padding:4px 8px; border-radius:6px; border:1px solid var(--primary-red); background:#FFF; color:var(--primary-red); cursor:pointer; font-weight:700;">Ir al Día 1</button>
+                        </div>
+
+                        <label style="font-size:12px; font-weight:700; display:block; margin-bottom:6px;">Selecciona el Mes del Tratamiento:</label>
+                        <select id="month-select" class="month-selector" onchange="renderDaysGrid()"></select>
+
+                        <div class="days-grid" id="days-grid-container"></div>
+
+                        <div style="margin-top:16px; font-size:11px; color:var(--text-muted); display:flex; gap:12px; flex-wrap:wrap;">
+                            <span><strong style="color:#16A34A;">■ Verde:</strong> 100% Completado</span>
+                            <span><strong style="color:#D4AF37;">■ Dorado:</strong> En progreso</span>
+                            <span><strong style="color:#111;">■ Negro:</strong> Día activo</span>
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha: Horario Exacto y Checkboxes del Día -->
+                    <div class="panel-card">
+                        <div class="day-detail-header">
+                            <div>
+                                <span class="day-badge-phase" id="detail-phase-badge">FASE 1: DESINFLAMACIÓN Y FRENO DE CAÍDA</span>
+                                <h3 id="detail-day-title">Día 1 — Lunes, 16 de Noviembre de 2026</h3>
+                                <p id="detail-day-subtitle">Protocolo de Lavado Clínico con Ketoconazol 2% + Nutrición Vasodilatadora</p>
+                            </div>
+                            <div class="day-score-circle">
+                                <span id="detail-score-pct">0%</span>
+                                <small id="detail-score-count">0 / 8 Tareas</small>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom:15px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                            <h4 style="font-size:15px;"><i class="fa-solid fa-clock" style="color:var(--primary-red);"></i> Horario Clínico Paso a Paso (Marca cada casilla al cumplirla):</h4>
+                            <button onclick="markAllDayTasks()" style="background:var(--accent-gold-light); border:1px solid var(--accent-gold); color:#111; padding:6px 12px; border-radius:8px; font-size:12px; font-weight:700; cursor:pointer;">
+                                <i class="fa-solid fa-check-double"></i> Marcar Todo el Día
+                            </button>
+                        </div>
+
+                        <div class="schedule-list" id="daily-tasks-container"></div>
+
+                        <div class="notes-area">
+                            <label style="font-size:13px; font-weight:700;"><i class="fa-solid fa-pen-to-square" style="color:var(--primary-red);"></i> Bitácora Clínica del Día (Sensación del cuero cabelludo, caída en la ducha, energía):</label>
+                            <textarea id="daily-note-input" placeholder="Escribe aquí cómo sentiste tu cabello hoy..."></textarea>
+                            <button class="btn-save-note" onclick="saveDailyNote()">
+                                <i class="fa-solid fa-floppy-disk"></i> Guardar Nota en Supabase
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= PESTAÑA 2: DIAGNÓSTICO DE FOTOS Y FASES ================= -->
+            <section id="tab-diagnosis" class="tab-section">
+                <div class="panel-card" style="margin-bottom:25px;">
+                    <div class="panel-title">
+                        <span><i class="fa-solid fa-user-doctor"></i> Evaluación Tricológica de tus Imágenes y Videos</span>
+                    </div>
+                    <div class="grid-2col">
+                        <div style="background:var(--bg-sec); padding:20px; border-radius:12px; border-left:5px solid var(--primary-red);">
+                            <h3 style="font-size:16px; margin-bottom:10px; color:var(--primary-red);">Lo que revelan las 3 primeras fotos (Estado Actual)</h3>
+                            <ul style="padding-left:18px; font-size:13.5px; display:flex; flex-direction:column; gap:8px;">
+                                <li><strong>Miniaturización Androgenética + Efluvio en Zona Superior:</strong> Se observa disminución del diámetro del tallo capilar en la zona superior (vertex/coronilla y zona media frontal). Los folículos siguen vivos pero producen cabellos más delgados y cortos.</li>
+                                <li><strong>Agrupamiento por Aceite de Argán:</strong> El aceite de argán pesado junto con el flash directo de la cámara pega las hebras finas entre sí, exagerando los claros. <strong>Corrección:</strong> Jamás pongas aceite de argán en la raíz; úsalo solo 2 gotas en las puntas.</li>
+                                <li><strong>Cutícula Deshidratada por Lavado Diario y Calor:</strong> Lavar a diario con sulfatos barrió los lípidos naturales de tu rizo, afinando la fibra y quitándole cuerpo.</li>
+                            </ul>
+                        </div>
+                        <div style="background:var(--bg-sec); padding:20px; border-radius:12px; border-left:5px solid var(--accent-gold);">
+                            <h3 style="font-size:16px; margin-bottom:10px; color:#856404;">Lo que revelan tus fotos y videos anteriores (Tu Potencial Genético)</h3>
+                            <ul style="padding-left:18px; font-size:13.5px; display:flex; flex-direction:column; gap:8px;">
+                                <li><strong>Genética de Rizo 2C/3A de Alto Volumen:</strong> Tus videos demuestran que tienes una excelente densidad folicular base y un patrón semi-rizado que, cuando tiene grosor y proteína, genera una esponjosidad y cobertura envidiables en la frente y coronilla.</li>
+                                <li><strong>Capacidad de Reversión a los 22-23 años:</strong> A tu edad, la matriz celular del bulbo responde rápido a la vasodilatación (Minoxidil + Óxido Nítrico + Microneedling) y al bloqueo de DHT.</li>
+                                <li><strong>Regla de Oro para Recuperar el Rizo:</strong> Suspender secadores calientes, lavar el cuero cabelludo solo 4 veces por semana con shampoos clínicos y secar con camiseta de algodón o microfibra (técnica <em>scrunch</em> sin frotar).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom:16px; font-size:18px;"><i class="fa-solid fa-road" style="color:var(--primary-red);"></i> Hoja de Ruta Clínica: ¿Qué pasará mes a mes durante tu año?</h3>
+                <div class="phase-timeline">
+                    <div class="phase-box">
+                        <h4>Meses 1 a 3 (Nov 2026 - Feb 2027)</h4>
+                        <h3>Fase 1: Desinflamación y Sincronización</h3>
+                        <p style="font-size:13px; color:var(--text-muted);">Se repara la barrera lipídica al dejar de lavar a diario. Entre la semana 3 y 6 puede haber <em>shedding</em> (el pelo viejo y fino cae empujado por un pelo nuevo y más grueso que viene debajo). ¡No te asustes, es señal de éxito clínico!</p>
+                    </div>
+                    <div class="phase-box">
+                        <h4>Meses 4 a 6 (Feb 2027 - May 2027)</h4>
+                        <h3>Fase 2: Despertar Folicular y Brotación</h3>
+                        <p style="font-size:13px; color:var(--text-muted);">La caída se detiene drásticamente. Empiezan a verse miles de cabellos nuevos tipo "brote" en la línea frontal y parte superior. Tu rizo natural recupera elasticidad gracias a la L-Cistina y el método sin sulfatos agresivos.</p>
+                    </div>
+                    <div class="phase-box">
+                        <h4>Meses 7 a 9 (May 2027 - Ago 2027)</h4>
+                        <h3>Fase 3: Engrosamiento del Calibre</h3>
+                        <p style="font-size:13px; color:var(--text-muted);">El diámetro de cada hebra aumenta hasta un 35%. Los claros de la parte superior se cierran visualmente porque el cabello ya tiene el largo y la curvatura suficientes para entrelazarse y crear sombra en el cuero cabelludo.</p>
+                    </div>
+                    <div class="phase-box">
+                        <h4>Meses 10 a 12 (Ago 2027 - Nov 2027)</h4>
+                        <h3>Fase 4: Consolidación y Volumen Máximo</h3>
+                        <p style="font-size:13px; color:var(--text-muted);">Llegada a tus 24 años con la densidad estabilizada, rizo definido con peso saludable, cutícula sellada y cero miniaturización activa.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= PESTAÑA 3: PASTILLAS, SHAMPOOS Y TÓPICOS ================= -->
+            <section id="tab-arsenal" class="tab-section">
+                <div class="panel-card" style="margin-bottom:25px;">
+                    <div class="panel-title">
+                        <span><i class="fa-solid fa-capsules"></i> 1. Pastillas y Suplementos Orales (Científicamente Comprobados)</span>
+                    </div>
+                    <table class="clinical-table">
+                        <thead>
+                            <tr>
+                                <th>Pastilla / Suplemento</th>
+                                <th>Dosis Exacta</th>
+                                <th>Hora de Toma</th>
+                                <th>Mecanismo Científico en el Folículo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Saw Palmetto (Serenoa Repens) + Semilla de Calabaza</strong><br><small>(O Finasteride 1mg bajo receta dermatológica)</small></td>
+                                <td><span class="pill-badge">320 mg / día</span></td>
+                                <td><strong>07:30 AM</strong> (Con el desayuno)</td>
+                                <td>Inhibe la enzima 5-alfa-reductasa tipo II, frenando la conversión de testosterona en DHT que miniaturiza los folículos de la parte superior.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vitamina D3 + K2 + Omega 3 (EPA/DHA)</strong></td>
+                                <td><span class="pill-badge">2000-4000 UI + 1000 mg</span></td>
+                                <td><strong>07:30 AM</strong> (Con huevos/grasas buenas)</td>
+                                <td>Activa los receptores VDR de la papila dérmica para iniciar la fase anágena (crecimiento) y desinflama el cuero cabelludo.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Picolinato o Citrato de Zinc</strong></td>
+                                <td><span class="pill-badge">15 mg a 30 mg</span></td>
+                                <td><strong>01:30 PM</strong> (Después del almuerzo)</td>
+                                <td>Cofactor de más de 300 enzimas de división celular en la matriz del pelo. Nunca tomar en ayunas para evitar náuseas.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>L-Cistina / L-Metionina + Biotina</strong><br><small>(Ej. Cystiphane, Pilopeptan o Anacaps)</small></td>
+                                <td><span class="pill-badge">500 mg + 5000 mcg</span></td>
+                                <td><strong>01:30 PM</strong> (Con el almuerzo)</td>
+                                <td>Aporta el azufre necesario para formar los puentes disulfuro de la queratina, engrosando el tallo y devolviendo la fuerza al rizo.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Glicinato o Citrato de Magnesio</strong></td>
+                                <td><span class="pill-badge">300 mg a 400 mg</span></td>
+                                <td><strong>09:30 PM</strong> (Antes de dormir)</td>
+                                <td>Reduce el cortisol nocturno (hormona del estrés que causa caída) y mejora la síntesis proteica durante el sueño profundo.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="grid-2col">
+                    <div class="panel-card">
+                        <div class="panel-title">
+                            <span><i class="fa-solid fa-pump-soap"></i> 2. Shampoos Clínicos y Frecuencia Exacta</span>
+                        </div>
+                        <p style="font-size:13px; margin-bottom:12px; color:var(--primary-red); font-weight:600;">¡PROHIBIDO LAVAR CON SHAMPOO TODOS LOS DÍAS! Este es tu nuevo calendario semanal de lavado con agua tibia/fría:</p>
+                        <table class="clinical-table">
+                            <thead>
+                                <tr>
+                                    <th>Días</th>
+                                    <th>Producto Clínico</th>
+                                    <th>Cómo Aplicarlo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Lunes y Jueves</strong></td>
+                                    <td><strong>Shampoo con Ketoconazol 2%</strong> (Nizoral, Ketomed o genérico)</td>
+                                    <td>Aplicar solo en el cuero cabelludo, masajear con yemas (no uñas) y <strong>dejar actuar 5 minutos exactos</strong> antes de enjuagar. Luego aplica acondicionador en puntas.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Martes y Sábado</strong></td>
+                                    <td><strong>Shampoo Dermatológico Sin Sulfatos con Cafeína/Biotina</strong> (Vichy Dercos Energizante o Isdin Lambdapil)</td>
+                                    <td>Limpieza suave que estimula la microcirculación sin resecar el rizo. Dejar actuar 3 minutos y aplicar mascarilla hidratante de medios a puntas.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Miércoles, Viernes y Domingo</strong></td>
+                                    <td><strong>Días de Descanso de Shampoo (Solo Refresh de Rizo)</strong></td>
+                                    <td>No uses shampoo. Humedece ligeramente las hebras con un atomizador de agua + infusión de romero o unas gotas de leave-in ligero para reactivar el rizo con las manos.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="panel-card">
+                        <div class="panel-title">
+                            <span><i class="fa-solid fa-leaf"></i> 3. Tópicos Clínicos y Naturales (Paso a Paso)</span>
+                        </div>
+                        <ul style="list-style:none; display:flex; flex-direction:column; gap:14px; font-size:13.5px;">
+                            <li style="padding:12px; background:var(--bg-sec); border-radius:10px; border-left:4px solid var(--primary-red);">
+                                <strong>1. Minoxidil 5% (Espuma o Loción) — Lunes a Sábado (10:00 PM):</strong><br>
+                                Con el cuero cabelludo seco, aplica 1 ml (6 pulverizaciones) directamente en la piel de la parte superior y entradas. Da toques suaves con las yemas. Lava tus manos y deja actuar toda la noche.
+                            </li>
+                            <li style="padding:12px; background:var(--bg-sec); border-radius:10px; border-left:4px solid var(--accent-gold);">
+                                <strong>2. Elixir Natural de Romero + Jojoba (Pre-Lavado Lunes y Jueves 05:30 PM):</strong><br>
+                                Mezcla en un frasco gotero oscuro: <strong>30 ml de Aceite de Jojoba puro + 15 gotas de Aceite Esencial de Romero + 5 gotas de Aceite Esencial de Menta Piperita</strong>. Aplica 10 gotas en el cuero cabelludo 45 minutos antes de bañarte, masajea 5 minutos y luego lávalo.
+                            </li>
+                            <li style="padding:12px; background:var(--bg-sec); border-radius:10px; border-left:4px solid var(--dark-black);">
+                                <strong>3. Microneedling (Dermastamp 1.25mm) — Domingos (09:00 PM):</strong><br>
+                                Desinfecta el Dermastamp con alcohol al 70%. Presiona verticalmente en las zonas con poca densidad (sin arrastrar para no cortar tus rizos) hasta que la piel se ponga ligeramente rosada. <strong>Regla:</strong> La noche del domingo NO te pongas Minoxidil para que no arda ni pase directo al torrente sanguíneo.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= PESTAÑA 4: NUTRICIÓN VASODILATADORA ================= -->
+            <section id="tab-nutrition" class="tab-section">
+                <div class="panel-card">
+                    <div class="panel-title">
+                        <span><i class="fa-solid fa-heart-pulse"></i> Alimentación para Aumentar el Flujo Sanguíneo Capilar (Óxido Nítrico + Queratina)</span>
+                    </div>
+                    <p style="font-size:13.5px; margin-bottom:18px; color:var(--text-muted);">
+                        La parte superior del cráneo (galea aponeurótica) no tiene músculos y sufre de hipoxia (bajo oxígeno). Estos alimentos aumentan la producción endotelial de <strong>Óxido Nítrico (NO)</strong>, abriendo los microcapilares para que la sangre cargada de aminoácidos, hierro y vitaminas llegue a tus folículos:
+                    </p>
+                    <table class="clinical-table">
+                        <thead>
+                            <tr>
+                                <th>Horario</th>
+                                <th>Comida Clave</th>
+                                <th>Alimentos Exactos a Consumir</th>
+                                <th>Efecto en la Densidad Sanguínea y Hebra</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>07:00 AM</strong></td>
+                                <td><strong>Shot Vasodilatador + Desayuno Folicular</strong></td>
+                                <td>
+                                    • 1 vaso de jugo de <strong>Remolacha (Betabel) licuada con jugo de 1 limón y 1 trocito de jengibre</strong>.<br>
+                                    • 3 Huevos enteros revueltos o cocidos con espinaca y ½ aguacate.<br>
+                                    • Avena con canela.
+                                </td>
+                                <td>La remolacha y el jengibre disparan el Óxido Nítrico arterial en 45 minutos. El huevo aporta L-Cisteína, Biotina y Colina de máxima biodisponibilidad.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>10:30 AM</strong></td>
+                                <td><strong>Hidratación Celular</strong></td>
+                                <td>
+                                    • 750 ml de agua pura.<br>
+                                    • 1 puñado de arándanos, moras o fresas (antioxidantes vasculares).
+                                </td>
+                                <td>Protege los capilares sanguíneos del estrés oxidativo y mantiene hidratada la médula del cabello seco.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>01:00 PM</strong></td>
+                                <td><strong>Almuerzo de Ferritina y Colágeno</strong></td>
+                                <td>
+                                    • 180g de Carne magra de res, Hígado (1 vez/sem), Pollo o Pescado azul (Sardina/Atún/Trucha).<br>
+                                    • 1 taza de Lentejas o Frejol acompañado de <strong>ensalada con Pimiento Rojo y Limón</strong>.
+                                </td>
+                                <td>El hierro hemo y no-hemo (activado por la Vitamina C del pimiento y limón) eleva la <strong>Ferritina sérica</strong> por encima de 70 ng/mL, indispensable para engrosar el cabello.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>04:30 PM</strong></td>
+                                <td><strong>Snack Anti-DHT y L-Arginina</strong></td>
+                                <td>
+                                    • 30g de <strong>Semillas de Calabaza tostadas + Nueces/Almendras</strong>.<br>
+                                    • 2 cuadros de Chocolate Negro al 85% + 1 taza de Té Verde.
+                                </td>
+                                <td>La L-Arginina de las nueces y los flavonoides del cacao dilatan la microcirculación periférica; las semillas de calabaza aportan Cucurbitacina (bloqueador natural de DHT).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>07:30 PM</strong></td>
+                                <td><strong>Cena Reparadora Anágena</strong></td>
+                                <td>
+                                    • Caldo de huesos concentrado (rico en glicina y prolina) o filete de pescado/pollo a la plancha.<br>
+                                    • Brócoli al vapor con aceite de oliva extra virgen.
+                                </td>
+                                <td>La división celular del folículo alcanza su pico máximo entre las 11:00 PM y las 03:00 AM; el colágeno y aminoácidos de la cena construyen el nuevo tallo.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ================= PESTAÑA 5: LISTA DE COMPRAS Y BITÁCORA MENSUAL ================= -->
+            <section id="tab-shopping" class="tab-section">
+                <div class="panel-card" style="margin-bottom:25px;">
+                    <div class="panel-title">
+                        <span><i class="fa-solid fa-basket-shopping"></i> Lista Completa de Compras (Marca lo que ya tengas listo para el Lunes 16 de Noviembre)</span>
+                    </div>
+                    <div class="shop-grid" id="shopping-list-container"></div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="panel-title">
+                        <span><i class="fa-solid fa-chart-line"></i> Bitácora de Control Tricológico Mensual (Mes 1 al Mes 12)</span>
+                    </div>
+                    <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">Evalúa del 1 al 10 cómo ves tu densidad y grosor al finalizar cada mes de tratamiento. Todo se guarda en tu base de datos de Supabase.</p>
+                    <table class="clinical-table">
+                        <thead>
+                            <tr>
+                                <th>Mes del Plan</th>
+                                <th>Densidad Visual (1-10)</th>
+                                <th>Grosor del Rizo (1-10)</th>
+                                <th>Observaciones Clínicas del Mes</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthly-metrics-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- NOTIFICACIÓN TOAST -->
+    <div id="toast" class="toast-notification">
+        <i class="fa-solid fa-cloud-arrow-up" style="color:var(--accent-gold);"></i>
+        <span id="toast-msg">Guardado en Supabase correctamente</span>
+    </div>
+
+    <script>
+        // ============================================================================
+        // CONFIGURACIÓN DE SUPABASE (CON TUS CREDENCIALES EXACTAS)
+        // ============================================================================
+        const SUPABASE_URL = 'https://nnqilgbphueagqzhqtdv.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_QbJymnO8POmcsKtztAA3lw_nm9Mcgiu';
+        const VALID_USER = 'Milton';
+        const VALID_PASS = 'Milton_3002';
+
+        let supabaseClient = null;
+        try {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        } catch (err) {
+            console.warn('Modo local activado si Supabase requiere configuración adicional:', err);
+        }
+
+        // ============================================================================
+        // GENERADOR DEL PLAN DE 365 DÍAS (16 NOV 2026 AL 15 NOV 2027)
+        // ============================================================================
+        const START_DATE = new Date(2026, 10, 16); // Mes 10 es Noviembre en JS (0-indexado)
+        const TOTAL_DAYS = 365;
+        let allDaysPlan = [];
+        let progressMap = {}; // date_str -> { completed_tasks: [], daily_notes: '' }
+        let shoppingMap = {}; // item_key -> boolean
+        let monthlyMap = {};  // month_number -> { density_score, thickness_score, observations }
+        let selectedDayIndex = 0;
+
+        const DAYS_NAMES = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const MONTHS_NAMES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+        const SHOPPING_ITEMS = [
+            { key: 'shampoo_keto', name: 'Shampoo Ketoconazol 2% (Nizoral / Ketomed)', cat: 'Farmacia' },
+            { key: 'shampoo_suave', name: 'Shampoo Sin Sulfatos con Cafeína (Vichy Dercos / Lambdapil)', cat: 'Dermatológico' },
+            { key: 'acondicionador', name: 'Acondicionador / Mascarilla con Pantenol y Ceramidas (Sin siliconas)', cat: 'Cuidado Rizo' },
+            { key: 'minoxidil_5', name: 'Minoxidil 5% Loción o Espuma Capilar', cat: 'Tópico Clínico' },
+            { key: 'saw_palmetto', name: 'Cápsulas Saw Palmetto 320mg (o Bloqueador DHT)', cat: 'Suplemento Oral' },
+            { key: 'lcistina_biotina', name: 'Complejo L-Cistina 500mg + Biotina 5000mcg', cat: 'Suplemento Oral' },
+            { key: 'zinc_picolinato', name: 'Picolinato o Citrato de Zinc (15-30mg)', cat: 'Suplemento Oral' },
+            { key: 'vit_d3_omega', name: 'Vitamina D3 (2000-4000 UI) + Omega 3', cat: 'Suplemento Oral' },
+            { key: 'magnesio', name: 'Citrato o Glicinato de Magnesio (300-400mg)', cat: 'Suplemento Oral' },
+            { key: 'aceite_romero', name: 'Aceite Esencial Puro de Romero + Menta Piperita', cat: 'Natural' },
+            { key: 'aceite_jojoba', name: 'Aceite Vehicular de Jojoba (Para diluir romero sin tapar poros)', cat: 'Natural' },
+            { key: 'dermastamp', name: 'Dermastamp o Dermaroller de Titanio (1.0mm a 1.5mm) + Alcohol 70%', cat: 'Herramienta' },
+            { key: 'toalla_microfibra', name: 'Toalla de Microfibra + Funda de Almohada de Satín (Anti-quiebre)', cat: 'Cuidado Rizo' },
+            { key: 'alimentos_no', name: 'Remolacha, Huevos, Semillas de Calabaza, Lentejas, Cacao 85%', cat: 'Supermercado' }
+        ];
+
+        function formatDateISO(d) {
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${y}-${m}-${day}`;
+        }
+
+        function getPhaseInfo(dayNum) {
+            if (dayNum <= 90) {
+                return {
+                    phase: 'FASE 1 (Mes 1-3): DESINFLAMACIÓN Y FRENO DE CAÍDA',
+                    goal: 'Restaurar la barrera lipídica del rizo, desinflamar folículos con Ketoconazol y activar vasodilatación.'
+                };
+            } else if (dayNum <= 180) {
+                return {
+                    phase: 'FASE 2 (Mes 4-6): REACTIVACIÓN ANÁGENA Y BROTES NUEVOS',
+                    goal: 'Multiplicar el nacimiento de cabellos nuevos en coronilla y línea frontal.'
+                };
+            } else if (dayNum <= 270) {
+                return {
+                    phase: 'FASE 3 (Mes 7-9): ENGROSAMIENTO DE CALIBRE Y RIZO',
+                    goal: 'Aumentar el diámetro del tallo capilar con L-Cistina y estimulación de colágeno.'
+                };
+            } else {
+                return {
+                    phase: 'FASE 4 (Mes 10-12): CONSOLIDACIÓN DE DENSIDAD Y VOLUMEN MÁXIMO',
+                    goal: 'Sellar la cutícula y estabilizar el volumen estructural a largo plazo.'
+                };
+            }
+        }
+
+        // Construir las 8 tareas exactas según el día de la semana
+        function buildTasksForDay(dateObj, dayNum) {
+            const dow = dateObj.getDay(); // 0=Dom, 1=Lun, 2=Mar, 3=Mié, 4=Jue, 5=Vie, 6=Sáb
+            const isBirthday = (dateObj.getMonth() === 10 && dateObj.getDate() === 25);
+
+            // Determinar protocolo de lavado y tópico de la tarde según el día de la semana
+            let afternoonTitle = '';
+            let afternoonDesc = '';
+            let nightTopicTitle = '';
+            let nightTopicDesc = '';
+
+            if (dow === 1 || dow === 4) {
+                // Lunes y Jueves: Romero Pre-shampoo + Ketoconazol 2%
+                afternoonTitle = 'Pre-Lavado con Romero/Jojoba + Shampoo Ketoconazol 2%';
+                afternoonDesc = '05:30 PM: Aplica 10 gotas de Aceite de Romero diluido en Jojoba en la raíz por 30 min. 06:00 PM: Lava con Shampoo Ketoconazol 2% (deja actuar 5 min en la piel). Aplica acondicionador SOLO en puntas y seca al aire o con toalla de microfibra sin frotar.';
+            } else if (dow === 2 || dow === 6) {
+                // Martes y Sábado: Shampoo Suave Dermatológico + Mascarilla Rizo
+                afternoonTitle = 'Lavado Dermatológico Sin Sulfatos + Hidratación de Rizo';
+                afternoonDesc = 'Aplica Shampoo con Cafeína/Biotina sin sulfatos masajeando con las yemas por 3 minutos (agua tibia/fría). Luego aplica Mascarilla con Pantenol/Ceramidas de medios a puntas por 5 min. Define tus rizos con técnica scrunch y solo 2 gotitas de argán en las puntas.';
+            } else {
+                // Miércoles, Viernes y Domingo: Día sin Shampoo (Descanso Lipídico)
+                afternoonTitle = 'Descanso de Shampoo + Refresh Hidratante de Rizo';
+                afternoonDesc = '¡Hoy NO se lava con shampoo para proteger los lípidos naturales de tu cabello seco! Rocía un poco de agua mineral con infusión fría de romero en los largos y acomoda tus rizos suavemente con los dedos.';
+            }
+
+            if (dow === 0) {
+                // Domingo en la noche: Microneedling (Dermastamp)
+                nightTopicTitle = 'Sesión Semanal de Microneedling (Dermastamp 1.25mm)';
+                nightTopicDesc = 'Con el cuero cabelludo limpio y seco, desinfecta tu Dermastamp con alcohol al 70%. Presiona suavemente en la zona superior y entradas durante 5 minutos para activar factores de crecimiento VEGF. (Hoy descansa del Minoxidil).';
+            } else {
+                // Lunes a Sábado en la noche: Minoxidil 5%
+                nightTopicTitle = 'Aplicación Tópica de Minoxidil 5% (Vasodilatador Folicular)';
+                nightTopicDesc = 'Aplica 1 ml (6 pulverizaciones) directamente sobre la piel de la parte superior y entradas (no sobre el pelo). Esparce con toques suaves y déjalo actuar toda la noche.';
+            }
+
+            const tasks = [
+                {
+                    id: 't1_desayuno',
+                    time: '07:00 AM',
+                    cat: 'Nutrición Vascular',
+                    title: 'Shot Vasodilatador de Remolacha + Desayuno Proteico (3 Huevos)',
+                    desc: 'Toma 1 vaso de jugo de remolacha con limón y jengibre (dispara el Óxido Nítrico hacia el cuero cabelludo) + 3 huevos enteros y avena.'
+                },
+                {
+                    id: 't2_pastillas_am',
+                    time: '07:30 AM',
+                    cat: 'Pastillas Mañana',
+                    title: 'Toma de Bloqueador DHT (Saw Palmetto 320mg) + Vitamina D3 + Omega 3',
+                    desc: 'Ingerir junto con el desayuno para máxima absorción liposoluble y bloqueo matutino de la hormona DHT.'
+                },
+                {
+                    id: 't3_almuerzo',
+                    time: '01:00 PM',
+                    cat: 'Nutrición Hierro',
+                    title: 'Almuerzo Rico en Ferritina + Vitamina C',
+                    desc: 'Proteína completa (Res/Pescado/Pollo) + Lentejas o Frejol acompañado de ensalada con pimiento rojo y jugo de limón para fijar el hierro en el folículo.'
+                },
+                {
+                    id: 't4_pastillas_pm',
+                    time: '01:30 PM',
+                    cat: 'Pastillas Tarde',
+                    title: 'Toma de L-Cistina (500mg) + Biotina (5000mcg) + Picolinato de Zinc (20mg)',
+                    desc: 'Aminoácidos azufrados y zinc para engrosar el calibre de la hebra y fortalecer la estructura de tu rizo.'
+                },
+                {
+                    id: 't5_snack',
+                    time: '04:30 PM',
+                    cat: 'Microcirculación',
+                    title: 'Snack de Semillas de Calabaza (30g) + Nueces + Cacao 85% + Agua (2L)',
+                    desc: 'Aporte natural de L-Arginina, Zinc y antioxidantes vasculares.'
+                },
+                {
+                    id: 't6_cuidado_tarde',
+                    time: '06:00 PM',
+                    cat: 'Higiene & Rizo',
+                    title: afternoonTitle,
+                    desc: afternoonDesc
+                },
+                {
+                    id: 't7_masaje',
+                    time: '09:00 PM',
+                    cat: 'Flujo Sanguíneo',
+                    title: 'Masaje de Movilización Galeal (5 Minutos Exactos)',
+                    desc: 'Con las yemas de los dedos firmes sobre la piel del cráneo (sin frotar el pelo), mueve el cuero cabelludo en círculos desde las sienes hacia la coronilla para bombear sangre.'
+                },
+                {
+                    id: 't8_noche',
+                    time: '09:45 PM',
+                    cat: 'Tópico Nocturno & Sueño',
+                    title: nightTopicTitle + ' + Magnesio (300mg)',
+                    desc: nightTopicDesc + (isBirthday ? ' 🎉 ¡FELIZ CUMPLEAÑOS #23, MILTON! Hoy celebras cuidando tu mejor versión.' : '')
+                }
+            ];
+
+            return tasks;
+        }
+
+        function generateFullYearSchedule() {
+            allDaysPlan = [];
+            for (let i = 0; i < TOTAL_DAYS; i++) {
+                const d = new Date(START_DATE.getTime());
+                d.setDate(START_DATE.getDate() + i);
+                const dateStr = formatDateISO(d);
+                const dayNum = i + 1;
+                const phaseInfo = getPhaseInfo(dayNum);
+
+                allDaysPlan.push({
+                    index: i,
+                    dayNum: dayNum,
+                    dateObj: d,
+                    dateStr: dateStr,
+                    dayName: DAYS_NAMES[d.getDay()],
+                    monthName: MONTHS_NAMES[d.getMonth()],
+                    year: d.getFullYear(),
+                    monthKey: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`,
+                    phaseTitle: phaseInfo.phase,
+                    phaseGoal: phaseInfo.goal,
+                    tasks: buildTasksForDay(d, dayNum)
+                });
+            }
+        }
+
+        // ============================================================================
+        // AUTENTICACIÓN Y CARGA DE DATOS DESDE SUPABASE + LOCALSTORAGE
+        // ============================================================================
+        document.getElementById('login-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const u = document.getElementById('username-input').value.trim();
+            const p = document.getElementById('password-input').value.trim();
+            const errBox = document.getElementById('login-error');
+
+            if (u === VALID_USER && p === VALID_PASS) {
+                errBox.style.display = 'none';
+                localStorage.setItem('milton_hair_auth', 'true');
+                await startApp();
+            } else {
+                errBox.style.display = 'block';
+            }
+        });
+
+        function logoutApp() {
+            localStorage.removeItem('milton_hair_auth');
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('app-container').style.display = 'none';
+        }
+
+        async function startApp() {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('app-container').style.display = 'block';
+
+            generateFullYearSchedule();
+            populateMonthDropdown();
+            loadLocalBackup();
+            await syncFromSupabase();
+
+            renderDaysGrid();
+            selectDay(0);
+            renderShoppingList();
+            renderMonthlyTable();
+            updateGlobalStats();
+        }
+
+        function loadLocalBackup() {
+            const savedProg = localStorage.getItem('milton_hair_progress');
+            if (savedProg) progressMap = JSON.parse(savedProg);
+
+            const savedShop = localStorage.getItem('milton_hair_shopping');
+            if (savedShop) shoppingMap = JSON.parse(savedShop);
+
+            const savedMonth = localStorage.getItem('milton_hair_monthly');
+            if (savedMonth) monthlyMap = JSON.parse(savedMonth);
+        }
+
+        function saveLocalBackup() {
+            localStorage.setItem('milton_hair_progress', JSON.stringify(progressMap));
+            localStorage.setItem('milton_hair_shopping', JSON.stringify(shoppingMap));
+            localStorage.setItem('milton_hair_monthly', JSON.stringify(monthlyMap));
+        }
+
+        async function syncFromSupabase() {
+            if (!supabaseClient) return;
+            const statusText = document.getElementById('supabase-status-text');
+            const indicator = document.getElementById('supabase-indicator');
+
+            try {
+                // 1. Cargar progreso diario
+                const { data: progData, error: progErr } = await supabaseClient
+                    .from('daily_progress')
+                    .select('*')
+                    .eq('username', VALID_USER);
+
+                if (!progErr && progData) {
+                    progData.forEach(row => {
+                        progressMap[row.date_str] = {
+                            completed_tasks: Array.isArray(row.completed_tasks) ? row.completed_tasks : [],
+                            daily_notes: row.daily_notes || ''
+                        };
+                    });
+                }
+
+                // 2. Cargar lista de compras
+                const { data: shopData, error: shopErr } = await supabaseClient
+                    .from('shopping_checklist')
+                    .select('*')
+                    .eq('username', VALID_USER);
+
+                if (!shopErr && shopData) {
+                    shopData.forEach(row => {
+                        shoppingMap[row.item_key] = row.is_bought;
+                    });
+                }
+
+                // 3. Cargar métricas mensuales
+                const { data: monthData, error: monthErr } = await supabaseClient
+                    .from('monthly_metrics')
+                    .select('*')
+                    .eq('username', VALID_USER);
+
+                if (!monthErr && monthData) {
+                    monthData.forEach(row => {
+                        monthlyMap[row.month_number] = {
+                            density_score: row.density_score,
+                            thickness_score: row.thickness_score,
+                            observations: row.observations || ''
+                        };
+                    });
+                }
+
+                saveLocalBackup();
+                statusText.textContent = 'Supabase Sincronizado';
+                indicator.style.background = '#22C55E';
+            } catch (e) {
+                statusText.textContent = 'Respaldo Local Activo';
+                indicator.style.background = '#F59E0B';
+            }
+        }
+
+        // ============================================================================
+        // RENDERIZADO DEL CALENDARIO Y TAREAS DIARIAS
+        // ============================================================================
+        function populateMonthDropdown() {
+            const sel = document.getElementById('month-select');
+            sel.innerHTML = '';
+            const seenMonths = new Set();
+
+            allDaysPlan.forEach(d => {
+                if (!seenMonths.has(d.monthKey)) {
+                    seenMonths.add(d.monthKey);
+                    const opt = document.createElement('option');
+                    opt.value = d.monthKey;
+                    opt.textContent = `${d.monthName} ${d.year}`;
+                    sel.appendChild(opt);
+                }
+            });
+        }
+
+        function renderDaysGrid() {
+            const selMonth = document.getElementById('month-select').value;
+            const container = document.getElementById('days-grid-container');
+            container.innerHTML = '';
+
+            const filtered = allDaysPlan.filter(d => d.monthKey === selMonth);
+
+            filtered.forEach(d => {
+                const rec = progressMap[d.dateStr] || { completed_tasks: [] };
+                const doneCount = rec.completed_tasks.length;
+                const pct = Math.round((doneCount / d.tasks.length) * 100);
+
+                const cell = document.createElement('div');
+                cell.className = 'day-cell';
+                if (d.index === selectedDayIndex) cell.classList.add('selected');
+                if (pct === 100) cell.classList.add('completed-100');
+                else if (pct > 0) cell.classList.add('completed-partial');
+
+                cell.innerHTML = `
+                    <span class="d-num">Día ${d.dayNum}</span>
+                    <span class="d-date">${d.dateObj.getDate()} ${d.monthName.substring(0,3)}</span>
+                    <span class="d-pct">${pct}%</span>
+                `;
+                cell.onclick = () => selectDay(d.index);
+                container.appendChild(cell);
+            });
+        }
+
+        function selectDay(index) {
+            selectedDayIndex = index;
+            const dayObj = allDaysPlan[index];
+            const sel = document.getElementById('month-select');
+            if (sel.value !== dayObj.monthKey) {
+                sel.value = dayObj.monthKey;
+            }
+            renderDaysGrid();
+
+            const rec = progressMap[dayObj.dateStr] || { completed_tasks: [], daily_notes: '' };
+            const doneCount = rec.completed_tasks.length;
+            const totalCount = dayObj.tasks.length;
+            const pct = Math.round((doneCount / totalCount) * 100);
+
+            document.getElementById('detail-phase-badge').textContent = dayObj.phaseTitle;
+            document.getElementById('detail-day-title').textContent = `Día ${dayObj.dayNum} — ${dayObj.dayName}, ${dayObj.dateObj.getDate()} de ${dayObj.monthName} de ${dayObj.year}`;
+            document.getElementById('detail-day-subtitle').textContent = dayObj.phaseGoal;
+            document.getElementById('detail-score-pct').textContent = `${pct}%`;
+            document.getElementById('detail-score-count').textContent = `${doneCount} / ${totalCount} Tareas`;
+            document.getElementById('daily-note-input').value = rec.daily_notes || '';
+
+            // Actualizar barra superior del día seleccionado
+            document.getElementById('today-pct-val').textContent = `${pct}%`;
+            document.getElementById('today-progress-bar').style.width = `${pct}%`;
+            document.getElementById('today-date-sub').textContent = `Día ${dayObj.dayNum}: ${dayObj.dayName} ${dayObj.dateObj.getDate()} ${dayObj.monthName} ${dayObj.year}`;
+
+            // Renderizar las 8 tareas del día
+            const listContainer = document.getElementById('daily-tasks-container');
+            listContainer.innerHTML = '';
+
+            dayObj.tasks.forEach(task => {
+                const isDone = rec.completed_tasks.includes(task.id);
+                const item = document.createElement('div');
+                item.className = 'task-item' + (isDone ? ' done' : '');
+                item.onclick = (e) => {
+                    if (e.target.tagName !== 'INPUT') {
+                        toggleTask(dayObj.dateStr, dayObj.dayNum, task.id);
+                    }
+                };
+
+                item.innerHTML = `
+                    <input type="checkbox" class="task-checkbox" ${isDone ? 'checked' : ''} onchange="toggleTask('${dayObj.dateStr}', ${dayObj.dayNum}, '${task.id}')">
+                    <div class="task-time-col">
+                        <span class="time-badge"><i class="fa-regular fa-clock"></i> ${task.time}</span>
+                        <span class="task-cat-tag">${task.cat}</span>
+                    </div>
+                    <div class="task-info">
+                        <h4>${task.title}</h4>
+                        <p>${task.desc}</p>
+                    </div>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        async function toggleTask(dateStr, dayNum, taskId) {
+            if (!progressMap[dateStr]) {
+                progressMap[dateStr] = { completed_tasks: [], daily_notes: '' };
+            }
+            const arr = progressMap[dateStr].completed_tasks;
+            const idx = arr.indexOf(taskId);
+            if (idx > -1) {
+                arr.splice(idx, 1);
+            } else {
+                arr.push(taskId);
+            }
+
+            saveLocalBackup();
+            selectDay(selectedDayIndex);
+            updateGlobalStats();
+            await pushDayToSupabase(dateStr, dayNum);
+        }
+
+        async function markAllDayTasks() {
+            const dayObj = allDaysPlan[selectedDayIndex];
+            const allIds = dayObj.tasks.map(t => t.id);
+            if (!progressMap[dayObj.dateStr]) {
+                progressMap[dayObj.dateStr] = { completed_tasks: [], daily_notes: '' };
+            }
+            progressMap[dayObj.dateStr].completed_tasks = allIds;
+
+            saveLocalBackup();
+            selectDay(selectedDayIndex);
+            updateGlobalStats();
+            await pushDayToSupabase(dayObj.dateStr, dayObj.dayNum);
+            showToast('¡Día marcado al 100% y guardado en Supabase!');
+        }
+
+        async function saveDailyNote() {
+            const dayObj = allDaysPlan[selectedDayIndex];
+            const noteVal = document.getElementById('daily-note-input').value;
+            if (!progressMap[dayObj.dateStr]) {
+                progressMap[dayObj.dateStr] = { completed_tasks: [], daily_notes: '' };
+            }
+            progressMap[dayObj.dateStr].daily_notes = noteVal;
+            saveLocalBackup();
+            await pushDayToSupabase(dayObj.dateStr, dayObj.dayNum);
+            showToast('Nota clínica guardada en Supabase');
+        }
+
+        async function pushDayToSupabase(dateStr, dayNum) {
+            if (!supabaseClient) return;
+            const rec = progressMap[dateStr];
+            const pct = Math.round((rec.completed_tasks.length / 8) * 100);
+            try {
+                await supabaseClient
+                    .from('daily_progress')
+                    .upsert({
+                        username: VALID_USER,
+                        date_str: dateStr,
+                        day_number: dayNum,
+                        completed_tasks: rec.completed_tasks,
+                        total_tasks: 8,
+                        completion_pct: pct,
+                        daily_notes: rec.daily_notes || '',
+                        updated_at: new Date().toISOString()
+                    }, { onConflict: 'username,date_str' });
+            } catch (err) {
+                console.warn('Guardado en caché local:', err);
+            }
+        }
+
+        function updateGlobalStats() {
+            const totalPossibleTasks = TOTAL_DAYS * 8; // 2920 tareas en el año
+            let totalCompletedTasks = 0;
+            let perfectDays = 0;
+
+            Object.values(progressMap).forEach(rec => {
+                const c = rec.completed_tasks ? rec.completed_tasks.length : 0;
+                totalCompletedTasks += c;
+                if (c >= 8) perfectDays++;
+            });
+
+            const annualPct = ((totalCompletedTasks / totalPossibleTasks) * 100).toFixed(1);
+            document.getElementById('annual-pct-val').textContent = `${annualPct}%`;
+            document.getElementById('annual-progress-bar').style.width = `${annualPct}%`;
+            document.getElementById('annual-tasks-sub').textContent = `${totalCompletedTasks} de ${totalPossibleTasks} acciones completadas`;
+            document.getElementById('perfect-days-val').textContent = `${perfectDays} / 365`;
+        }
+
+        function goToStartDay() {
+            selectDay(0);
+        }
+
+        // ============================================================================
+        // LISTA DE COMPRAS Y BITÁCORA MENSUAL
+        // ============================================================================
+        function renderShoppingList() {
+            const container = document.getElementById('shopping-list-container');
+            container.innerHTML = '';
+
+            SHOPPING_ITEMS.forEach(item => {
+                const isBought = !!shoppingMap[item.key];
+                const div = document.createElement('div');
+                div.className = 'shop-item' + (isBought ? ' bought' : '');
+                div.onclick = (e) => {
+                    if (e.target.tagName !== 'INPUT') toggleShopItem(item.key, item.name, item.cat);
+                };
+                div.innerHTML = `
+                    <input type="checkbox" ${isBought ? 'checked' : ''} onchange="toggleShopItem('${item.key}', '${item.name}', '${item.cat}')">
+                    <div>
+                        <strong style="font-size:13.5px; display:block;">${item.name}</strong>
+                        <span style="font-size:11px; color:var(--primary-red); font-weight:700;">${item.cat}</span>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        async function toggleShopItem(key, name, cat) {
+            shoppingMap[key] = !shoppingMap[key];
+            saveLocalBackup();
+            renderShoppingList();
+
+            if (supabaseClient) {
+                try {
+                    await supabaseClient
+                        .from('shopping_checklist')
+                        .upsert({
+                            username: VALID_USER,
+                            item_key: key,
+                            item_name: name,
+                            category: cat,
+                            is_bought: shoppingMap[key],
+                            updated_at: new Date().toISOString()
+                        }, { onConflict: 'username,item_key' });
+                    showToast('Inventario actualizado en Supabase');
+                } catch (e) {}
+            }
+        }
+
+        function renderMonthlyTable() {
+            const tbody = document.getElementById('monthly-metrics-tbody');
+            tbody.innerHTML = '';
+
+            for (let m = 1; m <= 12; m++) {
+                const rec = monthlyMap[m] || { density_score: 5, thickness_score: 5, observations: '' };
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>Mes ${m}</strong></td>
+                    <td><input type="number" id="m-den-${m}" min="1" max="10" value="${rec.density_score}" style="width:65px; padding:6px; border-radius:6px; border:1px solid #CCC;"> / 10</td>
+                    <td><input type="number" id="m-thk-${m}" min="1" max="10" value="${rec.thickness_score}" style="width:65px; padding:6px; border-radius:6px; border:1px solid #CCC;"> / 10</td>
+                    <td><input type="text" id="m-obs-${m}" value="${rec.observations}" placeholder="Ej. Menos caída al bañarme, rizos más firmes..." style="width:100%; padding:7px; border-radius:6px; border:1px solid #CCC;"></td>
+                    <td><button class="btn-save-note" style="margin:0;" onclick="saveMonthMetric(${m})">Guardar</button></td>
+                `;
+                tbody.appendChild(tr);
+            }
+        }
+
+        async function saveMonthMetric(m) {
+            const den = parseInt(document.getElementById(`m-den-${m}`).value) || 5;
+            const thk = parseInt(document.getElementById(`m-thk-${m}`).value) || 5;
+            const obs = document.getElementById(`m-obs-${m}`).value;
+
+            monthlyMap[m] = { density_score: den, thickness_score: thk, observations: obs };
+            saveLocalBackup();
+
+            if (supabaseClient) {
+                try {
+                    await supabaseClient
+                        .from('monthly_metrics')
+                        .upsert({
+                            username: VALID_USER,
+                            month_number: m,
+                            density_score: den,
+                            thickness_score: thk,
+                            observations: obs,
+                            updated_at: new Date().toISOString()
+                        }, { onConflict: 'username,month_number' });
+                } catch (e) {}
+            }
+            showToast(`Métrica del Mes ${m} guardada en Supabase`);
+        }
+
+        // ============================================================================
+        // UTILIDADES DE INTERFAZ
+        // ============================================================================
+        function switchTab(tabId, btnEl) {
+            document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            btnEl.classList.add('active');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2800);
+        }
+
+        // Auto-login si ya inició sesión antes
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('milton_hair_auth') === 'true') {
+                startApp();
+            }
+        });
+    </script>
+</body>
+</html>
